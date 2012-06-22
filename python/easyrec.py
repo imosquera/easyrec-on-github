@@ -1,37 +1,47 @@
 import urllib
 import simplejson
 import csv
+import os
+import time
 
-def shorten(url):
+API_BASE_URL = "http://intralife.researchstudio.at:8080/api/1.0"
+API_BASE_VIEW_URL = API_BASE_URL + "/view"
+API_KEY = "3d66b20f7cbf176bf182946a15a5378e"
+TENANTID = "SOCIALIZE_MOVIE_PAL"
+
+def register_event(api_type, item_id, item_description, item_url, user_id, ratingvalue=None):
+    session_id = "%sU%s" % (int(time.time()), user_id)
+    base_url = "%s/%s?apikey=%s&tenantid=%s&sessionid=%s" % (API_BASE_URL, api_type, API_KEY, TENANTID, session_id)
+    url = "%s&itemid=%s&itemdescription=%s&itemurl=%s&user_id=%s" % (base_url, item_id, item_description, item_url, user_id)
+    call_api(url)
+    
+def call_api(url):
     try:
-        cleaned_url = url.replace("&", "%26")
-
-        bitly_url = "http://api.bit.ly/shorten?version=2.0.1&longUrl=" + cleaned_url + "&login=getsocialize&apiKey"
-        
-        f = urllib.urlopen(bitly_url)
-        json = f.read()
+        print "calling", url
+        f = urllib.urlopen(url)
+        data = f.read()
         f.close()
-        data = simplejson.loads(json)
-
-        print data
-
-        result = data["results"][url]["shortUrl"]
-
-        print result
-
         return result
-
     except Exception, ex:
         print ex
         return url
 
 
-def read_data(csv_file):
-
+def push_data(item_type):
+    filepath = os.path.dirname(os.path.realpath(__file__))
+    csv_file = "%s/data/socialize_%s_view.csv" % (filepath, item_type)
+    
+    print "reading...", csv_file
+    
     ifile  = open(csv_file, "rb")
     reader = csv.reader(ifile)
 
     rownum = 0
+    query_string = ""
+    item_id = ""
+    item_description = "some data"
+    item_url = "/fakeurl"
+    user_id = ""
     for row in reader:
         # Save header row.
         if rownum == 0:
@@ -39,11 +49,32 @@ def read_data(csv_file):
         else:
             colnum = 0
             for col in row:
-                print '%-8s: %s' % (header[colnum], col)
+                #print '%-8s: %s' % (header[colnum], col)
+                if item_type == "entity":
+                    if header[colnum] == "id":
+                        item_id = col
+                else: #user data
+                    if header[colnum] == "user_id":
+                        user_id = col
+                    if header[colnum] == "entity_id":
+                        item_id = col
                 colnum += 1
+            print query_string
+            
+            register_event("buy", item_id, item_description, item_url, user_id)
+            
+            query_string = ""
                 
         rownum += 1
 
     ifile.close()
 
-read_data('/Users/jasonpolites/projects/socialize/test.csv')
+
+
+
+
+
+
+push_data("like")
+
+
