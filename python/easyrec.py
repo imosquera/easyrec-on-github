@@ -4,9 +4,17 @@ import csv
 import os
 import time
 
-API_BASE_URL = "http://localhost:8080/easyrec-web/api/1.0"
+API_BASE_URL = "http://192.168.1.129:8080/easyrec-web/api/1.0"
 API_KEY = "71c9d399bf7482eaefb7224851e24f63"
 TENANTID = "SOCIALIZE_V1"
+
+
+def query(api_type="otherusersalsobought", item_id=6486541, user_id=60294226):
+    api_type = "recommendationsforuser"
+    session_id = "%sU%s" % (int(time.time()), user_id)
+    base_url = "%s/%s?apikey=%s&tenantid=%s&sessionid=%s" % (API_BASE_URL, api_type, API_KEY, TENANTID, session_id)
+    url = "%s&userid=%d&requesteditemtype=ITEM" % (base_url, user_id)
+    call_api(url)
 
 def register_event(api_type, item_id, item_description, item_url, user_id, ratingvalue=None):
     session_id = "%sU%s" % (int(time.time()), user_id)
@@ -87,7 +95,9 @@ def store_data(item_type):
     item_url = "/fakeurl"
     user_id = ""
     users = {}
+    count = 1.0
     for row in reader:
+        count = 1#count + 1.0
         # Save header row.
         if rownum == 0:
             header = row
@@ -103,17 +113,23 @@ def store_data(item_type):
                 colnum += 1
         rownum += 1
         if user_id in users:
-            users[user_id].update({item_id:5.0})
+            users[user_id].update({item_id:count})
         else:
             
-            users.update( {user_id: {item_id:5.0} } )
+            users.update( {user_id: {item_id:count} } )
         
     ifile.close()
-    print users
+    return users
 
-
+#response = query()
+#print response
+#push_data("like")
 
 
 #push_data("like")
-store_data("like")
-
+users = store_data("like")
+print users
+import recommendations
+print recommendations.getRecommendations(users, "52461857111")
+print recommendations.sim_distance(users, "152461857", "52461857111")
+print recommendations.topMatches(users,"52461857111")
