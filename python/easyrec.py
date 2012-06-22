@@ -4,12 +4,12 @@ import csv
 import os
 import time
 
-API_BASE_URL = "http://localhost:8080/easyrec-web/api/1.0"
+API_BASE_URL = "http://192.168.1.129:8080/easyrec-web/api/1.0"
 API_KEY = "71c9d399bf7482eaefb7224851e24f63"
 TENANTID = "SOCIALIZE_V1"
 
 
-def query(api_type="otherusersalsobought", item_id=6486541, user_id=62854731):
+def query(api_type="otherusersalsobought", item_id=6486541, user_id=60294226):
     api_type = "recommendationsforuser"
     session_id = "%sU%s" % (int(time.time()), user_id)
     base_url = "%s/%s?apikey=%s&tenantid=%s&sessionid=%s" % (API_BASE_URL, api_type, API_KEY, TENANTID, session_id)
@@ -45,7 +45,7 @@ def push_data(item_type):
     rownum = 0
     query_string = ""
     item_id = ""
-    item_description = "some data"
+    item_description = "No Data"
     item_url = "/fakeurl"
     user_id = ""
     for row in reader:
@@ -64,6 +64,8 @@ def push_data(item_type):
                         user_id = col
                     if header[colnum] == "entity_id":
                         item_id = col
+                    if header[colnum] == "name" and col != "":
+                        item_description = urllib.quote(col)
 
                 colnum += 1
             print query_string
