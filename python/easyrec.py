@@ -6,7 +6,15 @@ import time
 
 API_BASE_URL = "http://localhost:8080/easyrec-web/api/1.0"
 API_KEY = "71c9d399bf7482eaefb7224851e24f63"
-TENANTID = "SOCIALIZE"
+TENANTID = "SOCIALIZE_V1"
+
+
+def query(api_type="otherusersalsobought", item_id=6486541, user_id=62854731):
+    api_type = "recommendationsforuser"
+    session_id = "%sU%s" % (int(time.time()), user_id)
+    base_url = "%s/%s?apikey=%s&tenantid=%s&sessionid=%s" % (API_BASE_URL, api_type, API_KEY, TENANTID, session_id)
+    url = "%s&userid=%d&requesteditemtype=ITEM" % (base_url, user_id)
+    call_api(url)
 
 def register_event(api_type, item_id, item_description, item_url, user_id, ratingvalue=None):
     session_id = "%sU%s" % (int(time.time()), user_id)
@@ -71,8 +79,8 @@ def push_data(item_type):
 
 
 
-
-
-push_data("like")
+response = query()
+print response
+#push_data("like")
 
 
