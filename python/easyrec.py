@@ -63,7 +63,6 @@ def push_data(item_type):
             register_event("buy", item_id, item_description, item_url, user_id)
             
             query_string = ""
-            break                
         rownum += 1
 
     ifile.close()
