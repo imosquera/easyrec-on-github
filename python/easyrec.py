@@ -95,7 +95,7 @@ def store_data(item_type):
     item_url = "/fakeurl"
     user_id = ""
     users = {}
-    count = 1.0
+    count = 30.0
     for row in reader:
         count = 1#count + 1.0
         # Save header row.
@@ -131,5 +131,3 @@ users = store_data("like")
 print users
 import recommendations
 print recommendations.getRecommendations(users, "52461857111")
-print recommendations.sim_distance(users, "152461857", "52461857111")
-print recommendations.topMatches(users,"52461857111")

@@ -101,11 +101,19 @@ def sim_pearson(prefs,p1,p2):
 	#Calculate r (Pearson score)
 	num = pSum - (sum1 * sum2/n)
 	den = sqrt((sum1Sq - pow(sum1,2)/n) * (sum2Sq - pow(sum2,2)/n))
+
+	print p1	
+	print str(sum1) + " sum1"
+	print str(sum2) + " sum2"
+	print "DHDHDHD"
+	print den
+
+	import random
 	if den == 0:
-		return 0
+		return 0.1
 
+	print den 
 	r = num/den
-
 	return r
 
 #Returns the best matches for person from the prefs dictionary
