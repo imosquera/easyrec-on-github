@@ -6,7 +6,7 @@ import time
 
 API_BASE_URL = "http://localhost:8080/easyrec-web/api/1.0"
 API_KEY = "71c9d399bf7482eaefb7224851e24f63"
-TENANTID = "SOCIALIZE"
+TENANTID = "SOCIALIZE_V1"
 
 def register_event(api_type, item_id, item_description, item_url, user_id, ratingvalue=None):
     session_id = "%sU%s" % (int(time.time()), user_id)
@@ -56,7 +56,7 @@ def push_data(item_type):
                         user_id = col
                     if header[colnum] == "entity_id":
                         item_id = col
-                    if header[colnum] == "name":
+                    if header[colnum] == "name" and col != "":
                         item_description = urllib.quote(col)
 
                 colnum += 1
