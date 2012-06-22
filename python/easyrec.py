@@ -4,10 +4,9 @@ import csv
 import os
 import time
 
-API_BASE_URL = "http://intralife.researchstudio.at:8080/api/1.0"
-API_BASE_VIEW_URL = API_BASE_URL + "/view"
-API_KEY = "3d66b20f7cbf176bf182946a15a5378e"
-TENANTID = "SOCIALIZE_MOVIE_PAL"
+API_BASE_URL = "http://localhost:8080/easyrec-web/api/1.0"
+API_KEY = "71c9d399bf7482eaefb7224851e24f63"
+TENANTID = "SOCIALIZE"
 
 def register_event(api_type, item_id, item_description, item_url, user_id, ratingvalue=None):
     session_id = "%sU%s" % (int(time.time()), user_id)
@@ -21,10 +20,9 @@ def call_api(url):
         f = urllib.urlopen(url)
         data = f.read()
         f.close()
-        return result
+        print data
     except Exception, ex:
         print ex
-        return url
 
 
 def push_data(item_type):
@@ -58,13 +56,13 @@ def push_data(item_type):
                         user_id = col
                     if header[colnum] == "entity_id":
                         item_id = col
+
                 colnum += 1
             print query_string
             
             register_event("buy", item_id, item_description, item_url, user_id)
             
             query_string = ""
-                
         rownum += 1
 
     ifile.close()
