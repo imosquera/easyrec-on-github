@@ -70,11 +70,50 @@ def push_data(item_type):
     ifile.close()
 
 
+def store_data(item_type):
+    filepath = os.path.dirname(os.path.realpath(__file__))
+    csv_file = "%s/data/socialize_%s_view.csv" % (filepath, item_type)
+
+    print "reading...", csv_file
+
+    ifile  = open(csv_file, "rb")
+    reader = csv.reader(ifile)
+
+    
+    rownum = 0
+    query_string = ""
+    item_id = ""
+    item_description = "No Data"
+    item_url = "/fakeurl"
+    user_id = ""
+    users = {}
+    for row in reader:
+        # Save header row.
+        if rownum == 0:
+            header = row
+        else:
+            colnum = 0
+            for col in row:
+                if header[colnum] == "user_id":
+                    user_id = col
+                if header[colnum] == "entity_id":
+                    item_id = col
+                if header[colnum] == "name" and col != "":
+                    item_description = urllib.quote(col)
+                colnum += 1
+        rownum += 1
+        if user_id in users:
+            users[user_id].update({item_id:5.0})
+        else:
+            
+            users.update( {user_id: {item_id:5.0} } )
+        
+    ifile.close()
+    print users
 
 
 
 
-
-push_data("like")
-
+#push_data("like")
+store_data("like")
 
