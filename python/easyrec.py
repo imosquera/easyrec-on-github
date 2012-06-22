@@ -37,7 +37,7 @@ def push_data(item_type):
     rownum = 0
     query_string = ""
     item_id = ""
-    item_description = "some data"
+    item_description = "No Data"
     item_url = "/fakeurl"
     user_id = ""
     for row in reader:
@@ -56,6 +56,8 @@ def push_data(item_type):
                         user_id = col
                     if header[colnum] == "entity_id":
                         item_id = col
+                    if header[colnum] == "name":
+                        item_description = urllib.quote(col)
 
                 colnum += 1
             print query_string
