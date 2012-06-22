@@ -1,5 +1,7 @@
 # Package Files #
+system/server/work/
+system/server/webapps/easyrec-web/
+system/server/logs/
 .DS_Store
 *.class
-*.war
 *.ear
