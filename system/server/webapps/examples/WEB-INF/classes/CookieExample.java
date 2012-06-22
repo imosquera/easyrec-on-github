@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-/* $Id: CookieExample.java 1200121 2011-11-10 04:01:40Z kkolinko $
+/* $Id: CookieExample.java 1337730 2012-05-12 23:17:21Z kkolinko $
  *
  */
 
@@ -60,13 +60,12 @@ public class CookieExample extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         out.println("<html>");
-        out.println("<body bgcolor=\"white\">");
         out.println("<head>");
 
         String title = RB.getString("cookies.title");
         out.println("<title>" + title + "</title>");
         out.println("</head>");
-        out.println("<body>");
+        out.println("<body bgcolor=\"white\">");
 
         // relative links
 

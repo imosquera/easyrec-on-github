@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-/* $Id: RequestHeaderExample.java 1200123 2011-11-10 04:03:27Z kkolinko $
+/* $Id: RequestHeaderExample.java 1337730 2012-05-12 23:17:21Z kkolinko $
  *
  */
 
@@ -51,13 +51,12 @@ public class RequestHeaderExample extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         out.println("<html>");
-        out.println("<body bgcolor=\"white\">");
         out.println("<head>");
 
         String title = RB.getString("requestheader.title");
         out.println("<title>" + title + "</title>");
         out.println("</head>");
-        out.println("<body>");
+        out.println("<body bgcolor=\"white\">");
 
         // all links relative
 

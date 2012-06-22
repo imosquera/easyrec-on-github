@@ -24,7 +24,7 @@
 // * Read access to the web application's document root directory
 // * Read, write and delete access to the web application's working directory
 //
-// $Id: catalina.policy 1220297 2011-12-17 22:55:28Z markt $
+// $Id: catalina.policy 1347048 2012-06-06 18:47:00Z markt $
 // ============================================================================
 
 
@@ -188,6 +188,9 @@ grant {
 
     // Applications using Comet need to be able to access this package
     permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.comet";
+
+    // Applications using WebSocket need to be able to access this package
+    permission java.lang.RuntimePermission "accessClassInPackage.org.apache.catalina.websocket";
 };
 
 

@@ -14,7 +14,7 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-/* $Id: RequestParamExample.java 1200123 2011-11-10 04:03:27Z kkolinko $
+/* $Id: RequestParamExample.java 1337730 2012-05-12 23:17:21Z kkolinko $
  *
  */
 
@@ -50,7 +50,6 @@ public class RequestParamExample extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         out.println("<html>");
-        out.println("<body>");
         out.println("<head>");
 
         String title = RB.getString("requestparams.title");

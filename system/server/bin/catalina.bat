@@ -93,12 +93,12 @@ rem                   set TITLE=Tomcat.Cluster#1.Server#1 [%DATE% %TIME%]
 rem
 rem
 rem
-rem $Id: catalina.bat 1202062 2011-11-15 06:50:02Z mturk $
+rem $Id: catalina.bat 1344732 2012-05-31 14:08:02Z kkolinko $
 rem ---------------------------------------------------------------------------
 
 rem Suppress Terminate batch job on CTRL+C
 if not ""%1"" == ""run"" goto mainEntry
-if ""%TEMP%"" == """" goto mainEntry
+if "%TEMP%" == "" goto mainEntry
 if exist "%TEMP%\%~nx0.run" goto mainEntry
 echo Y>"%TEMP%\%~nx0.run"
 if not exist "%TEMP%\%~nx0.run" goto mainEntry
